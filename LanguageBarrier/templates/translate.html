@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Translation Tool</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; max-width: 600px; }
+        textarea { width: 100%; height: 100px; margin-bottom: 10px; }
+        select { width: 100%; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+
+<h1>Translation Tool</h1>
+
+<label for="sourceLang">Original Language:</label>
+<select id="sourceLang">
+    <option value="en">English</option>
+    <option value="es">Spanish</option>
+    <option value="fr">French</option>
+    <option value="de">German</option>
+</select>
+
+<label for="targetLang">Target Language:</label>
+<select id="targetLang">
+    <option value="es">Spanish</option>
+    <option value="en">English</option>
+    <option value="fr">French</option>
+    <option value="de">German</option>
+</select>
+
+<label for="inputText">Text to Translate:</label>
+<textarea id="inputText"></textarea>
+
+<button id="translateBtn">Translate</button>
+
+<label for="outputText">Translated Text:</label>
+<textarea id="outputText" readonly></textarea>
+
+<script>
+    document.getElementById('translateBtn').addEventListener('click', async () => {
+        const sourceLang = document.getElementById('sourceLang').value;
+        const targetLang = document.getElementById('targetLang').value;
+        const inputText = document.getElementById('inputText').value;
+
+        if (!inputText) {
+            alert('Please enter text to translate.');
+            return;
+        }
+
+        const response = await fetch('/translate/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRFToken': '{{ csrf_token }}',
+            },
+            body: new URLSearchParams({
+                sourceLang,
+                targetLang,
+                inputText,
+            }),
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+            document.getElementById('outputText').value = data.translatedText;
+        } else {
+            alert('Translation failed: ' + data.error);
+        }
+    });
+</script>
+
+</body>
+</html>
