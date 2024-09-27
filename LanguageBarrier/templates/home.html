@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layout Example</title>
+    <style>
+        body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.top-navbar {
+    width: 100%;
+    height: 50px;
+    background-color: #333;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+}
+
+.top-navbar .left {
+    flex: 1;
+    background-color: #555;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+.top-navbar .middle {
+    flex: 7;
+    display: flex;
+    justify-content: center;
+}
+
+.top-navbar .middle input {
+    width: 100%;
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+}
+
+.top-navbar .right {
+    flex: 1;
+    background-color: #555;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+
+.side-navbar {
+    width: 200px;
+    height: calc(100vh - 50px);
+    background-color: #444;
+    color: white;
+    position: fixed;
+    top: 50px;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    background-color: #666;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+    width: 90%;
+}
+
+.nav-item .icon {
+    margin-right: 10px;
+}
+
+.nav-item .text {
+    flex-grow: 1;
+}
+
+.side-navbar button {
+    background-color: #888;
+    color: white;
+    padding: 10px;
+    margin: 5px;
+    border: none;
+    border: 2px solid #666;
+    cursor: pointer;
+    width: 90%;
+}
+
+
+.main-content {
+    margin-left: 200px;
+    margin-top: 50px;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.main-content div {
+    width: 200px;
+    height: 150px;
+    background-color: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.footer {
+    width: 100%;
+    height: 150px;
+    background-color: #333;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
+.footer-heading {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.footer-content {
+    display: flex;
+    gap: 10px;
+    
+}
+
+.footer-content div {
+    background-color: #555;
+    padding: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .side-navbar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .main-content {
+        margin-left: 0;
+        margin-top: 0;
+        padding: 10px;
+        flex-direction: column;
+    }
+
+    .footer {
+        height: auto;
+        flex-direction: column;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .top-navbar {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .top-navbar div {
+        margin: 2px;
+        padding: 5px;
+    }
+
+    .side-navbar {
+        flex-direction: column;
+    }
+
+    .main-content div {
+        width: 100%;
+        height: auto;
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="top-navbar">
+        <div class="left">Top 1</div>
+        <div class="middle">
+            <input type="text" placeholder="Search...">
+        </div>
+        <div class="right">Top 3</div>
+        <div class="right">Top 4</div>
+        <div class="right">Top 5</div>
+    </div>
+    
+    
+    <div class="side-navbar">
+        <div class="nav-item">
+            <span class="icon">🏠</span>
+            <span class="text">Home</span>
+        </div>
+        <div class="nav-item">
+            <span class="icon">🔍</span>
+            <span class="text">Discover</span>
+        </div>
+        <div class="nav-item">
+            <span class="icon">📻</span>
+            <span class="text">Radio</span>
+        </div>
+        <div class="nav-item">
+            <span class="icon">🕒</span>
+            <span class="text">Recently Played</span>
+        </div>
+        <div class="nav-item">
+            <span class="icon">❤️</span>
+            <span class="text">Favorite Songs</span>
+        </div>
+        <div class="nav-item">
+            <span class="icon">🎵</span>
+            <span class="text">Albums</span>
+        </div>
+        <button>Button</button>
+    </div>
+    
+    <div class="main-content">
+        <div>
+            <div>
+                <a href="translate.html">Translate</a>
+            </div>
+        </div>
+        <div>
+            <div>
+                <a href="currency.html">Currency Converter</a>
+            </div>
+        </div>
+        <div>
+            <div>
+                <a href="blog.html">Blog</a>
+            </div>
+            </div>
+            <div>
+                <div>
+                    <a href="map.html">Map</a>
+                </div>
+            </div>
+    </div>
+    <div class="footer">
+        <div class="footer-heading">Footer Heading</div>
+        <div class="footer-content">
+            <div>Footer 1</div>
+            <div>Footer 2</div>
+            <div>Footer 3</div>
+            <div>Footer 4</div>
+            <div>Footer 5</div>
+        </div>
+    </div>
+</body>
+</html>

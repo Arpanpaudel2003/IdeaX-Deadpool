@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Route Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <style>
+        #map { height: 500px; width: 50%; }
+    </style>
+</head>
+<body>
+
+<h2>Route Map</h2>
+
+<div id="map"></div>
+
+<script>
+    // Example: Set your start and end points, replace these with dynamic values from your backend
+    var startLat = 27.7172;  // Kathmandu, Nepal
+    var startLng = 85.3240;
+    var endLat = 27.6825;    // Patan, Nepal
+    var endLng = 85.3260;
+
+    // Example GeoJSON data for the route
+    // var routeGeoJson = {
+    //     "type": "LineString",
+    //     "coordinates": [
+    //         [85.3240, 27.7172],
+    //         [85.3260, 27.6825]
+    //     ]
+    // };
+
+    // Create the map centered at the start point
+    var map = L.map('map').setView([startLat, startLng], 13);
+
+    // Add the OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Add markers for the start and end points
+    // var startMarker = L.marker([startLat, startLng]).addTo(map)
+    //     .bindPopup('Start Point').openPopup();
+    // var endMarker = L.marker([endLat, endLng]).addTo(map)
+    //     .bindPopup('End Point').openPopup();
+
+    // Define the GeoJSON route and add it to the map
+    L.geoJSON(routeGeoJson).addTo(map);
+</script>
+
+</body>
+</html>
