@@ -5,26 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homepage</title>
     <style>
-        /* Reset for the body */
-html, body {
-    height: 100%; /* Ensure the body takes the full height */
-    margin: 0; /* Reset margin */
-}
-
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
     background-color: #f4f4f4;
     overflow-x: hidden;
-    display: flex; /* Enable flexbox for the body */
-    flex-direction: column; /* Stack children vertically */
 }
 
 a{
     text-decoration: none;
 }
-
-/* Simple Top Navbar */
-/* Simple Top Navbar */
+.logo{
+    color: white;
+}
 .top-navbar {
     background-color: #2c3e50;
     color: white;
@@ -40,41 +34,41 @@ a{
 }
 
 .nav-links {
-    display: flex; /* Change to flex for side-by-side layout */
-    list-style-type: none; /* Remove list styles */
-    margin: 0; /* Remove default margin */
-    padding: 0; /* Remove default padding */
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
 }
 
 .nav-links li {
-    margin-left: 20px; /* Space between each link */
+    margin-left: 20px;
 }
 
 .nav-links a {
     text-decoration: none;
     color: white;
-    font-size: 16px;
+    font-size: 20px;
     transition: color 0.3s;
 }
 
 .nav-links a:hover {
-    color: #16a085;
+    color: purple;
 }
-
 
 /* Main Content Styling */
 main {
-    flex: 1; /* Allow main to grow and fill space */
     padding: 40px;
     max-width: 1200px;
     margin: 0 auto;
 }
 
-/* Grid container for partitions */
+/* Grid container for partitions - Adjusted for 3x2 */
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(3, 1fr); /* Changed to 3 columns */
     gap: 20px;
+    align-content: center;
+    position: relative;
 }
 
 /* Box for each feature */
@@ -82,12 +76,16 @@ main {
     background-color: white;
     padding: 20px;
     border-radius: 8px;
+    border: 1px solid #dcdcdc; /* Thin outline with light gray color */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
+    transition: transform 0.3s, box-shadow 0.3s; 
     text-align: center;
     cursor: pointer;
+    text-decoration: none; 
+    z-index: 1;
 }
 
+/* Hover effect on the box */
 .grid-item:hover {
     transform: translateY(-10px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
@@ -115,22 +113,36 @@ main {
 footer {
     background-color: #2c3e50;
     color: white;
-    padding: 15px 0;
+    padding: 15px 0; 
     text-align: center;
     width: 100%;
+    position: absolute;
+    bottom: 0;
+    font-size: 20px; 
+}
+
+footer a {
+    color: white; 
+    padding-left: 1rem;
+    text-decoration: none; 
+}
+
+footer a:hover {
+    text-decoration: none;
+    color: purple; 
 }
     </style>
 </head>
 <body>
     <!-- Remove the sidebar and keep this top navigation -->
     <nav class="top-navbar">
-        <div class="logo">MyWebsite</div>
+        <a id = 'logo' href="{% url '' %} "><div class="logo">MyWebsite</div></a>
         <ul class="nav-links">
-            <li><a href="{% url '' %}"><i class="icon">🏠</i><span>Home</span></a></li>
-            <li><a href="{% url 'translate' %}"><i class="icon">🌐</i><span>Translation</span></a></li>
-            <li><a href="{% url 'currency' %}"><i class="icon">💰</i><span>Currency</span></a></li>
-            <li><a href="{% url 'map' %}"><i class="icon">🗺️</i><span>Map</span></a></li>
-            <li><a href="{% url 'blog' %}"><i class="icon">✍️</i><span>Blog</span></a></li>
+            <li><a href="{% url '' %}"><span>Home</span></a></li>
+            <li><a href="{% url 'translate' %}"><span>Translation</span></a></li>
+            <li><a href="{% url 'currency' %}"><span>Currency</span></a></li>
+            <li><a href="{% url 'map' %}"><span>Map</span></a></li>
+            <li><a href="{% url 'blog' %}"><span>Blog</span></a></li>
             <li><a href="about.html">About</a></li>
             <li><a href="contact.html">Contact</a></li>
         </ul>
@@ -165,6 +177,16 @@ footer {
                 <h3>Blog</h3>
                 <p>Read articles and tips about language, culture, and travel from our experts.</p>
             </div></a>
+            <a href="{% url 'weather' %}" class="grid-item">
+                <i>☁️</i>
+                <h3>Weather</h3>
+                <p>Get the latest weather updates for your location and beyond.</p>
+            </a>
+            <a href="guides.html" class="grid-item">
+                <i>📚</i>
+                <h3>Guides</h3>
+                <p>Explore guides for travel tips, culture, and more!</p>
+            </a>
         </div>
     </main>
 
