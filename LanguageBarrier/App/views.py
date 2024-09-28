@@ -86,3 +86,9 @@ def weather(request):
         city = ''
         data ={}
     return render (request, 'weather.html',{'city':city, 'data':data})
+
+def places(request):
+    return render(request,'places.html')
+
+def guides(request):
+    return render(request,'guides.html')

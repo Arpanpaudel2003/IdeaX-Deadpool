@@ -144,7 +144,9 @@
         .btn-info:hover {
             background-color: #2980b9;
         }
-
+        .logo{
+            color: white;
+        }
         .btn-danger {
             background-color: #e74c3c;
             border: none;
@@ -191,13 +193,9 @@
 <body>
 
     <nav class="top-navbar">
-        <div class="logo">MyWebsite</div>
+       <a href="{% url '' %}"><div class="logo">MyWebsite</div></a>
         <ul class="nav-links">
-            <li><a href="{% url '' %}"><i class="icon">🏠</i><span>Home</span></a></li>
-            <li><a href="{% url 'translate' %}"><i class="icon">🌐</i><span>Translation</span></a></li>
-            <li><a href="{% url 'currency' %}"><i class="icon">💰</i><span>Currency</span></a></li>
-            <li><a href="{% url 'map' %}"><i class="icon">🗺️</i><span>Map</span></a></li>
-            <li><a href="{% url 'blog' %}"><i class="icon">✍️</i><span>Blog</span></a></li>
+            <li><a href="{% url '' %}"></a><span>Home</span></a></li>
             <li><a href="about.html">About</a></li>
             <li><a href="contact.html">Contact</a></li>
         </ul>
