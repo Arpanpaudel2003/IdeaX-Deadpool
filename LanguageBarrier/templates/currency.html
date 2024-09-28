@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #C8D6AF;
+        }
+
+        .navbar {
+            width: 100%;
+            background-color: #5A189A;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar h1 {
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .navbar ul {
+            list-style: none;
+            display: flex;
+        }
+
+        .navbar ul li {
+            margin-left: 1.5rem;
+        }
+
+        .navbar ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .navbar ul li a:hover {
+            color: #D4A5FF;
+        }
+
+        .container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            min-height: 40vh;
+            width: 43vh;
+            margin-top: 2rem;
+        }
+
+        h2 {
+            font-style: inherit;
+        }
+
+        form {
+            margin: 2rem 0 1rem 0;
+        }
+
+        form input, select, button {
+            width: 100%;
+            border: none;
+            outline: none;
+            border-radius: none;
+        }
+
+        form input {
+            padding-left: 0.5rem;
+            font-size: 1rem;
+            height: 2.5rem;
+            border: 2px solid lightgray;
+            border-radius: 0.5rem;
+        }
+
+        .dropdown {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+        }
+
+        .select-container img {
+            max-width: 2rem;
+        }
+
+        .select-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 6.5rem;
+            border: 2px solid lightgray;
+            border-radius: 0.5rem;
+        }
+
+        .select-container select {
+            font-size: 1rem;
+            width: auto;
+        }
+
+        .msg {
+            margin: 2rem 0 2rem 0;
+        }
+
+        dropdown i {
+            margin-top: 1rem;
+        }
+
+        form button {
+            height: 3rem;
+            background-color: rgb(98, 41, 163);
+            color: white;
+            font-size: 1.2rem;
+            border-radius: 0.8rem;
+            cursor: pointer;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <h1>Currency Converter</h1>
+        <ul>
+          <li><a href="{% url '' %}"><i class="icon">🏠</i><span>Home</span></a></li>
+          <li><a href="{% url 'translate' %}"><i class="icon">🌐</i><span>Translation</span></a></li>
+          <li><a href="{% url 'currency' %}"><i class="icon">💰</i><span>Currency</span></a></li>
+          <li><a href="{% url 'map' %}"><i class="icon">🗺️</i><span>Map</span></a></li>
+          <li><a href="{% url 'blog' %}"><i class="icon">✍️</i><span>Blog</span></a></li>
+        </ul>
+    </nav>
+
+    <!-- Currency Converter Container -->
+    <div class="container">
+        <h2>Currency Converter</h2>
+        <form>
+            <div class="amount">
+                <p>Enter the amount</p>
+                <input type="text" value="1">
+            </div>
+            <div class="dropdown">
+                <div class="from">
+                    <p>From</p>
+                    <div class="select-container">
+                        <img src="https://flagsapi.com/US/flat/64.png">
+                        <select name="From">
+                        </select>
+                    </div>
+                </div>
+                <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                <div class="to">
+                    <p>To</p>
+                    <div class="select-container">
+                        <img src="https://flagsapi.com/NP/flat/64.png">
+                        <select name="To">
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="msg">1 USD = 135 NPR</div>
+            <button>Exchange the money</button>
+        </form>
+    </div>
+
+    <script>
+        const Base_Url = 'https://api.currencyapi.com/v3/latest';
+        const API_KEY = 'cur_live_Fkwf2VYX0TzBtvySJ8SOWiOP9Z38Ze3Fbewi4Syq';
+        const dropdowns = document.querySelectorAll(".dropdown select");
+
+        const countryList = {
+            AED: "AE", AFN: "AF", XCD: "AG", ALL: "AL", AMD: "AM", ANG: "AN", AOA: "AO", AQD: "AQ", ARS: "AR", AUD: "AU",
+            AZN: "AZ", BAM: "BA", BBD: "BB", BDT: "BD", XOF: "BE", BGN: "BG", BHD: "BH", BIF: "BI", BMD: "BM", BND: "BN",
+            BOB: "BO", BRL: "BR", BSD: "BS", NOK: "BV", BWP: "BW", BYR: "BY", BZD: "BZ", CAD: "CA", CDF: "CD", XAF: "CF",
+            CHF: "CH", CLP: "CL", CNY: "CN", COP: "CO", CRC: "CR", CUP: "CU", CVE: "CV", CYP: "CY", CZK: "CZ", DJF: "DJ",
+            DKK: "DK", DOP: "DO", DZD: "DZ", ECS: "EC", EEK: "EE", EGP: "EG", ETB: "ET", EUR: "FR", FJD: "FJ", FKP: "FK",
+            GBP: "GB", GEL: "GE", GGP: "GG", GHS: "GH", GIP: "GI", GMD: "GM", GNF: "GN", GTQ: "GT", GYD: "GY", HKD: "HK",
+            HNL: "HN", HRK: "HR", HTG: "HT", HUF: "HU", IDR: "ID", ILS: "IL", INR: "IN", IQD: "IQ", IRR: "IR", ISK: "IS",
+            JMD: "JM", JOD: "JO", JPY: "JP", KES: "KE", KGS: "KG", KHR: "KH", KMF: "KM", KPW: "KP", KRW: "KR", KWD: "KW",
+            KYD: "KY", KZT: "KZ", LAK: "LA", LBP: "LB", LKR: "LK", LRD: "LR", LSL: "LS", LTL: "LT", LVL: "LV", LYD: "LY",
+            MAD: "MA", MDL: "MD", MGA: "MG", MKD: "MK", MMK: "MM", MNT: "MN", MOP: "MO", MRO: "MR", MTL: "MT", MUR: "MU",
+            MVR: "MV", MWK: "MW", MXN: "MX", MYR: "MY", MZN: "MZ", NAD: "NA", XPF: "NC", NGN: "NG", NIO: "NI", NPR: "NP",
+            NZD: "NZ", OMR: "OM", PAB: "PA", PEN: "PE", PGK: "PG", PHP: "PH", PKR: "PK", PLN: "PL", PYG: "PY", QAR: "QA",
+            RON: "RO", RSD: "RS", RUB: "RU", RWF: "RW", SAR: "SA", SBD: "SB", SCR: "SC", SDG: "SD", SEK: "SE", SGD: "SG",
+            SKK: "SK", SLL: "SL", SOS: "SO", SRD: "SR", STD: "ST", SVC: "SV", SYP: "SY", SZL: "SZ", THB: "TH", TJS: "TJ",
+            TMT: "TM", TND: "TN", TOP: "TO", TRY: "TR", TTD: "TT", TWD: "TW", TZS: "TZ", UAH: "UA", UGX: "UG", USD: "US",
+            UYU: "UY", UZS: "UZ", VEF: "VE", VND: "VN", VUV: "VU", WST: "WS", XAF: "XY", YER: "YE", ZAR: "ZA", ZMK: "ZM",
+            ZWD: "ZW"
+        };
+
+        const populateDropdowns = async () => {
+            // Loop through each dropdown and populate it with options
+            for (let dropdown of dropdowns) {
+                for (let currencyCode in countryList) {
+                    const option = document.createElement("option");
+                    option.value = currencyCode;
+                    option.textContent = currencyCode;
+                    dropdown.appendChild(option);
+                }
+            }
+
+            // Fetch exchange rates and update the conversion
+            const response = await fetch(`${Base_Url}?apikey=${API_KEY}`);
+            const data = await response.json();
+            return data;
+        };
+
+        const convertCurrency = async () => {
+            const amount = document.querySelector(".amount input").value;
+            const fromCurrency = dropdowns[0].value;
+            const toCurrency = dropdowns[1].value;
+
+            const rates = await populateDropdowns();
+            const conversionRate = rates.data[toCurrency].value / rates.data[fromCurrency].value;
+            const convertedAmount = (amount * conversionRate).toFixed(2);
+            document.querySelector(".msg").textContent = `${amount} ${fromCurrency} = ${convertedAmount} ${toCurrency}`;
+        };
+
+        document.querySelector("form button").addEventListener("click", (e) => {
+            e.preventDefault();
+            convertCurrency();
+        });
+
+        // Populate the dropdowns when the page loads
+        window.onload = populateDropdowns;
+
+    </script>
+
+</body>
+</html>

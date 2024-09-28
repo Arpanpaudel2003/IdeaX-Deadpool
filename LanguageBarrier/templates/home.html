@@ -3,270 +3,176 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Layout Example</title>
+    <title>Homepage</title>
     <style>
-        body {
-    margin: 0;
-    font-family: Arial, sans-serif;
+        /* Reset for the body */
+html, body {
+    height: 100%; /* Ensure the body takes the full height */
+    margin: 0; /* Reset margin */
 }
 
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f4;
+    overflow-x: hidden;
+    display: flex; /* Enable flexbox for the body */
+    flex-direction: column; /* Stack children vertically */
+}
+
+a{
+    text-decoration: none;
+}
+
+/* Simple Top Navbar */
+/* Simple Top Navbar */
 .top-navbar {
-    width: 100%;
-    height: 50px;
-    background-color: #333;
+    background-color: #2c3e50;
     color: white;
+    padding: 10px 20px;
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    padding: 0 10px;
-}
-
-.top-navbar .left {
-    flex: 1;
-    background-color: #555;
-    padding: 10px;
-    margin: 5px;
-    border-radius: 5px;
-}
-
-.top-navbar .middle {
-    flex: 7;
-    display: flex;
-    justify-content: center;
-}
-
-.top-navbar .middle input {
-    width: 100%;
-    padding: 5px;
-    border-radius: 5px;
-    border: none;
-}
-
-.top-navbar .right {
-    flex: 1;
-    background-color: #555;
-    padding: 10px;
-    margin: 5px;
-    border-radius: 5px;
-    text-align: center;
-}
-
-
-.side-navbar {
-    width: 200px;
-    height: calc(100vh - 50px);
-    background-color: #444;
-    color: white;
-    position: fixed;
-    top: 50px;
-    left: 0;
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    padding-top: 20px;
 }
 
-.nav-item {
-    display: flex;
-    align-items: center;
-    background-color: #666;
-    padding: 10px;
-    margin: 5px;
-    border-radius: 5px;
-    width: 90%;
+.logo {
+    font-size: 24px;
+    font-weight: bold;
 }
 
-.nav-item .icon {
-    margin-right: 10px;
+.nav-links {
+    display: flex; /* Change to flex for side-by-side layout */
+    list-style-type: none; /* Remove list styles */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
 }
 
-.nav-item .text {
-    flex-grow: 1;
+.nav-links li {
+    margin-left: 20px; /* Space between each link */
 }
 
-.side-navbar button {
-    background-color: #888;
+.nav-links a {
+    text-decoration: none;
     color: white;
-    padding: 10px;
-    margin: 5px;
-    border: none;
-    border: 2px solid #666;
-    cursor: pointer;
-    width: 90%;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #16a085;
 }
 
 
-.main-content {
-    margin-left: 200px;
-    margin-top: 50px;
+/* Main Content Styling */
+main {
+    flex: 1; /* Allow main to grow and fill space */
+    padding: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Grid container for partitions */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+/* Box for each feature */
+.grid-item {
+    background-color: white;
     padding: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-align: center;
+    cursor: pointer;
 }
 
-.main-content div {
-    width: 200px;
-    height: 150px;
-    background-color: #ddd;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+.grid-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-.footer {
-    width: 100%;
-    height: 150px;
-    background-color: #333;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-}
-
-.footer-heading {
-    font-size: 18px;
+/* Icons and Text inside each box */
+.grid-item i {
+    font-size: 40px;
+    color: #16a085;
     margin-bottom: 10px;
 }
 
-.footer-content {
-    display: flex;
-    gap: 10px;
-    
+.grid-item h3 {
+    font-size: 22px;
+    color: #2c3e50;
+    margin-bottom: 15px;
 }
 
-.footer-content div {
-    background-color: #555;
-    padding: 10px;
+.grid-item p {
+    font-size: 16px;
+    color: #7f8c8d;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .side-navbar {
-        width: 100%;
-        height: auto;
-        position: relative;
-        flex-direction: row;
-        justify-content: space-around;
-    }
-
-    .main-content {
-        margin-left: 0;
-        margin-top: 0;
-        padding: 10px;
-        flex-direction: column;
-    }
-
-    .footer {
-        height: auto;
-        flex-direction: column;
-    }
-
-    .footer-content {
-        flex-direction: column;
-        align-items: center;
-    }
-}
-
-@media (max-width: 480px) {
-    .top-navbar {
-        flex-direction: column;
-        height: auto;
-    }
-
-    .top-navbar div {
-        margin: 2px;
-        padding: 5px;
-    }
-
-    .side-navbar {
-        flex-direction: column;
-    }
-
-    .main-content div {
-        width: 100%;
-        height: auto;
-    }
+/* Footer styles */
+footer {
+    background-color: #2c3e50;
+    color: white;
+    padding: 15px 0;
+    text-align: center;
+    width: 100%;
 }
     </style>
 </head>
 <body>
-    <div class="top-navbar">
-        <div class="left">Top 1</div>
-        <div class="middle">
-            <input type="text" placeholder="Search...">
+    <!-- Remove the sidebar and keep this top navigation -->
+    <nav class="top-navbar">
+        <div class="logo">MyWebsite</div>
+        <ul class="nav-links">
+            <li><a href="{% url '' %}"><i class="icon">🏠</i><span>Home</span></a></li>
+            <li><a href="{% url 'translate' %}"><i class="icon">🌐</i><span>Translation</span></a></li>
+            <li><a href="{% url 'currency' %}"><i class="icon">💰</i><span>Currency</span></a></li>
+            <li><a href="{% url 'map' %}"><i class="icon">🗺️</i><span>Map</span></a></li>
+            <li><a href="{% url 'blog' %}"><i class="icon">✍️</i><span>Blog</span></a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h1>Welcome to Language and Culture Services</h1>
+        <p>Breaking barriers with easy-to-use tools for translation, mapping, currency conversion, and more!</p>
+
+        <!-- Grid layout for feature sections -->
+        <a href="{% url 'translate' %}"><div class="grid-container">
+            <div class="grid-item">
+                <i>🌐</i>
+                <h3>Translation</h3>
+                <p>Translate text into multiple languages instantly and break language barriers easily.</p>
+            </div></a>
+
+            <a href="{% url 'currency' %}"> <div class="grid-item">
+                <i>💰</i>
+                <h3>Currency Converter</h3>
+                <p>Convert between various currencies quickly with up-to-date exchange rates.</p>
+            </div></a>
+
+            <a href="{% url 'map' %}"><div class="grid-item">
+                <i>🗺️</i>
+                <h3>Map</h3>
+                <p>Explore global maps with ease and find your destination efficiently.</p>
+            </div></a>
+
+            <a href="{% url 'blog' %}"><div class="grid-item">
+                <i>✍️</i>
+                <h3>Blog</h3>
+                <p>Read articles and tips about language, culture, and travel from our experts.</p>
+            </div></a>
         </div>
-        <div class="right">Top 3</div>
-        <div class="right">Top 4</div>
-        <div class="right">Top 5</div>
-    </div>
-    
-    
-    <div class="side-navbar">
-        <div class="nav-item">
-            <span class="icon">🏠</span>
-            <span class="text">Home</span>
-        </div>
-        <div class="nav-item">
-            <span class="icon">🔍</span>
-            <span class="text">Discover</span>
-        </div>
-        <div class="nav-item">
-            <span class="icon">📻</span>
-            <span class="text">Radio</span>
-        </div>
-        <div class="nav-item">
-            <span class="icon">🕒</span>
-            <span class="text">Recently Played</span>
-        </div>
-        <div class="nav-item">
-            <span class="icon">❤️</span>
-            <span class="text">Favorite Songs</span>
-        </div>
-        <div class="nav-item">
-            <span class="icon">🎵</span>
-            <span class="text">Albums</span>
-        </div>
-        <button>Button</button>
-    </div>
-    
-    <div class="main-content">
-        <div>
-            <div>
-                <a href="translate.html">Translate</a>
-            </div>
-        </div>
-        <div>
-            <div>
-                <a href="currency.html">Currency Converter</a>
-            </div>
-        </div>
-        <div>
-            <div>
-                <a href="blog.html">Blog</a>
-            </div>
-            </div>
-            <div>
-                <div>
-                    <a href="map.html">Map</a>
-                </div>
-            </div>
-    </div>
-    <div class="footer">
-        <div class="footer-heading">Footer Heading</div>
-        <div class="footer-content">
-            <div>Footer 1</div>
-            <div>Footer 2</div>
-            <div>Footer 3</div>
-            <div>Footer 4</div>
-            <div>Footer 5</div>
-        </div>
-    </div>
+    </main>
+
+    <footer>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+    </footer>
 </body>
 </html>
