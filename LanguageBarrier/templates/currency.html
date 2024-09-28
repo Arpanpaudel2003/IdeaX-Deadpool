@@ -1,179 +1,200 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Currency Converter</title>
+
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" crossorigin="anonymous" />
+
     <style>
-        * {
+        /* Consistent styling with home.html */
+
+        /* Body, font, and background consistency */
+        body {
+            background-color: #f4f4f4; /* Same background color as home.html */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
 
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background-color: #C8D6AF;
-        }
-
-        .navbar {
-            width: 100%;
+        /* Top Navbar for consistency */
+        .top-navbar {
             background-color: #2c3e50;
-            padding: 1rem;
+            color: white;
+            padding: 10px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
         }
 
-        .navbar h1 {
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
             color: white;
-            font-size: 1.5rem;
         }
 
-        .navbar ul {
-            list-style: none;
+        .nav-links {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
             display: flex;
         }
 
-        .navbar ul li {
-            margin-left: 1.5rem;
+        .nav-links li {
+            margin-left: 20px;
         }
 
-        .navbar ul li a {
-            color: white;
+        .nav-links a {
             text-decoration: none;
-            font-size: 1rem;
+            color: white;
+            font-size: 20px;
+            transition: color 0.3s;
         }
 
-        .navbar ul li a:hover {
-            color: #D4A5FF;
+        .nav-links a:hover {
+            color: purple;
         }
 
+        /* Container for the form */
         .container {
             background-color: white;
-            padding: 2rem;
-            border-radius: 1rem;
-            min-height: 40vh;
-            width: 43vh;
-            margin-top: 10rem;
-        
+            padding: 40px;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 400px;
+            margin: 60px auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         h2 {
-            font-style: inherit;
+            font-weight: bold;
+            color: #2c3e50;
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 20px;
         }
 
-        form {
-            margin: 2rem 0 1rem 0;
-        }
-
+        /* Form styles */
         form input, select, button {
             width: 100%;
-            border: none;
+            padding: 0.75rem;
+            font-size: 1rem;
+            border: 2px solid #dcdcdc;
+            border-radius: 8px;
+            margin-bottom: 1rem;
             outline: none;
-            border-radius: none;
-        }
-
-        form input {
-            padding-left: 0.5rem;
-            font-size: 1rem;
-            height: 2.5rem;
-            border: 2px solid lightgray;
-            border-radius: 0.5rem;
-        }
-
-        .dropdown {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 2rem;
-        }
-
-        .select-container img {
-            max-width: 2rem;
-        }
-
-        .select-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 6.5rem;
-            border: 2px solid lightgray;
-            border-radius: 0.5rem;
-        }
-
-        .select-container select {
-            font-size: 1rem;
-            width: auto;
         }
 
         .msg {
-            margin: 2rem 0 2rem 0;
+            margin: 1.5rem 0;
+            text-align: center;
+            color: #2c3e50;
+            font-size: 1.2rem;
+            font-weight: bold;
         }
 
-        dropdown i {
-            margin-top: 1rem;
-        }
-
+        /* Button styles */
         form button {
-            height: 3rem;
-            background-color: rgb(98, 41, 163);
+            background-color: #6229A3;
             color: white;
             font-size: 1.2rem;
-            border-radius: 0.8rem;
+            border: none;
+            border-radius: 8px;
             cursor: pointer;
+            padding: 0.75rem;
+            transition: background-color 0.3s;
+        }
+
+        form button:hover {
+            background-color: #7949bc;
+        }
+
+        /* Ensure mobile responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                width: 90vw;
+            }
+        }
+
+        /* Footer styles */
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+            width: 100%;
+            position: relative;
+            bottom: 0;
+            font-size: 20px;
+        }
+
+        footer a {
+            color: white;
+            padding-left: 1rem;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: none;
+            color: purple;
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
-<body>
 
-    <!-- Navbar -->
-    <nav class="navbar">
-        <h1>Currency Converter</h1>
-        <ul>
-          <li><a href="{% url '' %}"><span>Home</span></a></li>
-          <li><a href="contact.html"><span>Contact</span></a></li>
-          <li><a href="About.html"><span>About</span></a></li>
+<body>
+    <!-- Top Navbar from home.html -->
+    <nav class="top-navbar">
+        <a id='logo' href="{% url '' %} "><div class="logo">MyWebsite</div></a>
+        <ul class="nav-links">
+            <li><a href="{% url '' %}"><span>Home</span></a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
         </ul>
     </nav>
 
-    <!-- Currency Converter Container -->
+    <!-- Currency Converter Form -->
     <div class="container">
         <h2>Currency Converter</h2>
+
         <form>
             <div class="amount">
                 <p>Enter the amount</p>
                 <input type="text" value="1">
             </div>
+
             <div class="dropdown">
                 <div class="from">
                     <p>From</p>
                     <div class="select-container">
-                        <img src="https://flagsapi.com/US/flat/64.png">
-                        <select name="From">
-                        </select>
+                        <img src="https://flagsapi.com/US/flat/64.png" alt="From Country Flag">
+                        <select name="From"></select>
                     </div>
                 </div>
-                <i class="fa-solid fa-arrow-right-arrow-left"></i>
+
                 <div class="to">
                     <p>To</p>
                     <div class="select-container">
-                        <img src="https://flagsapi.com/NP/flat/64.png">
-                        <select name="To">
-                        </select>
+                        <img src="https://flagsapi.com/NP/flat/64.png" alt="To Country Flag">
+                        <select name="To"></select>
                     </div>
                 </div>
             </div>
+
             <div class="msg">1 USD = 135 NPR</div>
             <button>Exchange the money</button>
         </form>
     </div>
+
+    <!-- Footer from home.html -->
+    <footer>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+    </footer>
 
     <script>
         const Base_Url = 'https://api.currencyapi.com/v3/latest';
@@ -181,62 +202,78 @@
         const dropdowns = document.querySelectorAll(".dropdown select");
 
         const countryList = {
-            AED: "AE", AFN: "AF", XCD: "AG", ALL: "AL", AMD: "AM", ANG: "AN", AOA: "AO", AQD: "AQ", ARS: "AR", AUD: "AU",
-            AZN: "AZ", BAM: "BA", BBD: "BB", BDT: "BD", XOF: "BE", BGN: "BG", BHD: "BH", BIF: "BI", BMD: "BM", BND: "BN",
-            BOB: "BO", BRL: "BR", BSD: "BS", NOK: "BV", BWP: "BW", BYR: "BY", BZD: "BZ", CAD: "CA", CDF: "CD", XAF: "CF",
-            CHF: "CH", CLP: "CL", CNY: "CN", COP: "CO", CRC: "CR", CUP: "CU", CVE: "CV", CYP: "CY", CZK: "CZ", DJF: "DJ",
-            DKK: "DK", DOP: "DO", DZD: "DZ", ECS: "EC", EEK: "EE", EGP: "EG", ETB: "ET", EUR: "FR", FJD: "FJ", FKP: "FK",
-            GBP: "GB", GEL: "GE", GGP: "GG", GHS: "GH", GIP: "GI", GMD: "GM", GNF: "GN", GTQ: "GT", GYD: "GY", HKD: "HK",
-            HNL: "HN", HRK: "HR", HTG: "HT", HUF: "HU", IDR: "ID", ILS: "IL", INR: "IN", IQD: "IQ", IRR: "IR", ISK: "IS",
-            JMD: "JM", JOD: "JO", JPY: "JP", KES: "KE", KGS: "KG", KHR: "KH", KMF: "KM", KPW: "KP", KRW: "KR", KWD: "KW",
-            KYD: "KY", KZT: "KZ", LAK: "LA", LBP: "LB", LKR: "LK", LRD: "LR", LSL: "LS", LTL: "LT", LVL: "LV", LYD: "LY",
-            MAD: "MA", MDL: "MD", MGA: "MG", MKD: "MK", MMK: "MM", MNT: "MN", MOP: "MO", MRO: "MR", MTL: "MT", MUR: "MU",
-            MVR: "MV", MWK: "MW", MXN: "MX", MYR: "MY", MZN: "MZ", NAD: "NA", XPF: "NC", NGN: "NG", NIO: "NI", NPR: "NP",
-            NZD: "NZ", OMR: "OM", PAB: "PA", PEN: "PE", PGK: "PG", PHP: "PH", PKR: "PK", PLN: "PL", PYG: "PY", QAR: "QA",
-            RON: "RO", RSD: "RS", RUB: "RU", RWF: "RW", SAR: "SA", SBD: "SB", SCR: "SC", SDG: "SD", SEK: "SE", SGD: "SG",
-            SKK: "SK", SLL: "SL", SOS: "SO", SRD: "SR", STD: "ST", SVC: "SV", SYP: "SY", SZL: "SZ", THB: "TH", TJS: "TJ",
-            TMT: "TM", TND: "TN", TOP: "TO", TRY: "TR", TTD: "TT", TWD: "TW", TZS: "TZ", UAH: "UA", UGX: "UG", USD: "US",
-            UYU: "UY", UZS: "UZ", VEF: "VE", VND: "VN", VUV: "VU", WST: "WS", XAF: "XY", YER: "YE", ZAR: "ZA", ZMK: "ZM",
-            ZWD: "ZW"
+            INR: "IN",  // India
+            CNY: "CN",  // China
+            GBP: "GB",  // England (Great Britain)
+            USD: "US",  // USA
+            EUR: "ES",  // Spain (Euro)
+            EUR: "FR",  // France (Euro)
+            EUR: "DE",  // Germany (Euro)
         };
 
-        const populateDropdowns = async () => {
-            // Loop through each dropdown and populate it with options
-            for (let dropdown of dropdowns) {
-                for (let currencyCode in countryList) {
-                    const option = document.createElement("option");
-                    option.value = currencyCode;
-                    option.textContent = currencyCode;
-                    dropdown.appendChild(option);
+        const btn = document.querySelector("form button");
+        const fromCurr = document.querySelector(".from select");
+        const toCurr = document.querySelector(".to select");
+        const msg = document.querySelector(".msg");
+
+        for (let select of dropdowns) {
+            for (let currCode in countryList) {
+                let newOption = document.createElement("option");
+                newOption.innerText = currCode;
+                newOption.value = currCode;
+                if (select.name === "From" && currCode === "USD") {
+                    newOption.selected = true;
+                } else if (select.name === "To" && currCode === "INR") {
+                    newOption.selected = true;
                 }
+                select.append(newOption);
             }
 
-            // Fetch exchange rates and update the conversion
-            const response = await fetch(`${Base_Url}?apikey=${API_KEY}`);
-            const data = await response.json();
-            return data;
+            select.addEventListener("change", (evt) => {
+                updateFlag(evt.target);
+            });
+        }
+
+        const updateExchangeRate = async () => {
+            let amount = document.querySelector(".amount input");
+            let amtVal = parseFloat(amount.value);
+            if (isNaN(amtVal) || amtVal < 1) {
+                amtVal = 1;
+                amount.value = "1";
+            }
+
+            const url = `${Base_Url}?apikey=${API_KEY}&currencies=${toCurr.value}&base_currency=${fromCurr.value}`;
+
+            try {
+                let response = await fetch(url, { method: 'GET' });
+                if (!response.ok) throw new Error('Network response was not ok');
+
+                let data = await response.json();
+                let rate = data.data[toCurr.value].value;
+                let finalAmount = amtVal * rate;
+                msg.innerText = `${amtVal} ${fromCurr.value} = ${finalAmount.toFixed(2)} ${toCurr.value}`;
+            } catch (error) {
+                msg.innerText = `Error: ${error.message}`;
+            }
         };
 
-        const convertCurrency = async () => {
-            const amount = document.querySelector(".amount input").value;
-            const fromCurrency = dropdowns[0].value;
-            const toCurrency = dropdowns[1].value;
-
-            const rates = await populateDropdowns();
-            const conversionRate = rates.data[toCurrency].value / rates.data[fromCurrency].value;
-            const convertedAmount = (amount * conversionRate).toFixed(2);
-            document.querySelector(".msg").textContent = `${amount} ${fromCurrency} = ${convertedAmount} ${toCurrency}`;
+        const updateFlag = (element) => {
+            let currCode = element.value;
+            let countryCode = countryList[currCode];
+            let newSrc = `https://flagsapi.com/${countryCode}/flat/64.png`;
+            let img = element.parentElement.querySelector("img");
+            img.src = newSrc;
         };
 
-        document.querySelector("form button").addEventListener("click", (e) => {
-            e.preventDefault();
-            convertCurrency();
+        btn.addEventListener("click", (evt) => {
+            evt.preventDefault();
+            updateExchangeRate();
         });
 
-        // Populate the dropdowns when the page loads
-        window.onload = populateDropdowns;
-
+        window.addEventListener("load", () => {
+            updateExchangeRate();
+        });
     </script>
-
 </body>
+
 </html>
