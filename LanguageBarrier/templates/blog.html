@@ -193,9 +193,9 @@
 <body>
 
     <nav class="top-navbar">
-       <a href="{% url '' %}"><div class="logo">MyWebsite</div></a>
+       <a href="{% url 'home' %}"><div class="logo">MyWebsite</div></a>
         <ul class="nav-links">
-            <li><a href="{% url '' %}"></a><span>Home</span></a></li>
+            <li><a href="{% url 'home' %}"></a><span>Home</span></a></li>
             <li><a href="about.html">About</a></li>
             <li><a href="contact.html">Contact</a></li>
         </ul>
@@ -214,7 +214,7 @@
             </form>
 
             <!-- Create a new post -->
-            <form method="POST" action="">
+            <!-- <form method="POST" action="">
                 {% csrf_token %}
                 <div class="form-group">
                     {{ form.title.label_tag }}
@@ -235,7 +235,7 @@
                     {% endif %}
                 </div>
                 <button type="submit" class="btn btn-primary">Create Post</button>
-            </form>
+            </form> -->
 
             <!-- List of blog posts -->
             <hr>
@@ -249,11 +249,10 @@
                             <p>{{ post.para }}</p>
                             <small>Created: {{ post.created }}</small>
                         </div>
-                            <div class="mt-2">
-                                <!-- Links to update and delete posts -->
+                            <!-- <div class="mt-2">
                                 <a href="{% url 'update_post' post.id %}" class="btn btn-info">Update</a>
                                 <a href="{% url 'delete_post' post.id %}" class="btn btn-danger">Delete</a>
-                            </div>
+                            </div> -->
                         </ul>
                     {% endfor %}
                 </ul>

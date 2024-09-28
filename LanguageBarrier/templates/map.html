@@ -3,215 +3,223 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Route Map</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <title>Leaflet Route Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
-            display: flex;
-            height: 100vh;
+            overflow-x: hidden;
         }
 
-        .container {
+        a {
+            text-decoration: none;
+        }
+
+        .top-navbar {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px 20px;
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
-            width: 90%;
-            margin: auto;
-        }
-        
-        .left {
-            width: 20%;
-            height: 90vh; /* Full height for consistent styling */
-            background-color: white;
-            padding: 20px; /* Add some padding inside the left div */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
-            overflow-y: auto; /* Allow scrolling if content exceeds the height */
+            align-items: center;
         }
 
-        #right {
-            width: 80%;
-            height: 90vh; /* Full height for consistent styling */
-            padding: 10px; /* Add some padding inside the right div */
-            position: relative; /* Required for Leaflet map */
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
         }
 
-        .header {
-            font-size: 1.2em; /* Slightly larger text size */
-            margin-bottom: 20px;
-            color: #2c3e50; /* Darker header color */
+        .nav-links {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
         }
 
-        .input-group {
-            margin: 10px 0; /* Add gap at the top and bottom */
+        .nav-links li {
+            margin-left: 20px;
         }
 
-        .input-group label {
-            display: block;
-            margin-bottom: 4px;
-            font-size: 0.9em; /* Smaller text size */
-            color: #34495e; /* Darker label color */
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            font-size: 20px;
+            transition: color 0.3s;
         }
 
-        .input-group input {
+        .nav-links a:hover {
+            color: purple;
+        }
+
+        main {
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        #map {
+            height: 600px;
             width: 100%;
-            padding: 8px; /* Increased padding for better user experience */
-            box-sizing: border-box;
-            font-size: 0.9em; /* Slightly larger input text size */
-            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .input-container {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-container label {
+            font-size: 18px;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .input-container input {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #dcdcdc;
             border-radius: 4px;
         }
 
-        button {
-            padding: 10px 15px;
-            background-color: #3498db;
+        .input-container button {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #16a085;
             color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 0.9em;
             transition: background-color 0.3s;
         }
 
-        button:hover {
-            background-color: #2980b9; /* Darker shade on hover */
+        .input-container button:hover {
+            background-color: #149574;
         }
 
-        /* Responsive design */
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-                align-items: center;
-                height: auto;
-            }
-            .left, #right {
-                width: 100%;
-                height: auto;
-            }
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px 0; 
+            text-align: center;
+            width: 100%;
+            position: relative;
+            font-size: 20px; 
+            margin-top: 40px; /* Added margin for spacing */
+        }
+
+        footer a {
+            color: white; 
+            padding-left: 1rem;
+            text-decoration: none; 
+        }
+
+        footer a:hover {
+            text-decoration: none;
+            color: purple; 
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="left">
-            <div class="header">Route Finder</div>
-            <div class="input-group">
-                <label for="from">From:</label>
-                <input type="text" id="from" name="from" placeholder="Enter start location">
-            </div>
-            <div class="input-group">
-                <label for="to">To:</label>
-                <input type="text" id="to" name="to" placeholder="Enter end location">
-            </div>
-            <button onclick="updateMap()">Show Route</button>
+    <nav class="top-navbar">
+        <a id='logo' href="{% url 'home' %}"><div class="logo">MyWebsite</div></a>
+        <ul class="nav-links">
+            <li><a href="{% url 'home' %}"><span>Home</span></a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h2>Leaflet Route Map</h2>
+        <div class="input-container">
+            <label for="start">Start Location:</label>
+            <input type="text" id="start" placeholder="e.g. New York, NY">
         </div>
-        <div id="right">
-            <div id="map" style="height: 100%;"></div> <!-- Updated id for the map container -->
+        <div class="input-container">
+            <label for="end">End Location:</label>
+            <input type="text" id="end" placeholder="e.g. Los Angeles, CA">
         </div>
-    </div>
+        <div class="input-container">
+            <button id="routeBtn">Show Route</button>
+        </div>
+        <div id="map"></div>
+    </main>
+
+    <footer>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 
     <script>
-    var map;
-    var startMarker, endMarker;
+        // Initialize the map
+        const map = L.map('map').setView([37.8, -96], 4); // Centered on the US
 
-    async function getCoordinates(placeName) {
-        const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(placeName)}`);
-        const data = await response.json();
-        if (data.length > 0) {
-            return [parseFloat(data[0].lat), parseFloat(data[0].lon)];
-        } else {
-            //alert("Location not found: " + placeName);
-            return null;
-        }
-    }
+        // Set up the tile layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+        }).addTo(map);
 
-    async function getRoute(startCoords, endCoords) {
-        const response = await fetch(`http://router.project-osrm.org/route/v1/driving/${startCoords[1]},${startCoords[0]};${endCoords[1]},${endCoords[0]}?geometries=geojson&overview=simplified`);
-        const data = await response.json();
-        if (data.routes.length > 0) {
-            return data.routes[0].geometry.coordinates;
-        } else {
-            alert("Route not found.");
-            return null;
-        }
-    }
+        let control;
 
-    // Debounce function to limit how often a function can fire
-    function debounce(func, wait) {
-        let timeout;
-        return function(...args) {
-            clearTimeout(timeout);
-            timeout = setTimeout(() => func.apply(this, args), wait);
-        };
-    }
+        // Function to create a route
+        function createRoute() {
+            const start = document.getElementById('start').value;
+            const end = document.getElementById('end').value;
 
-    async function updateMap() {
-        const startPlace = document.getElementById('from').value;
-        const endPlace = document.getElementById('to').value;
-
-        const startCoords = await getCoordinates(startPlace);
-        const endCoords = await getCoordinates(endPlace);
-
-        if (startCoords && endCoords) {
-            // Clear existing markers if the map is initialized
-            if (map) {
-                if (startMarker) map.removeLayer(startMarker);
-                if (endMarker) map.removeLayer(endMarker);
-                map.eachLayer(function (layer) {
-                    if (layer instanceof L.GeoJSON) {
-                        map.removeLayer(layer);
-                    }
-                });
-            } else {
-                // Create the map centered at the start point
-                map = L.map('map').setView(startCoords, 13);
-
-                // Add the OpenStreetMap tiles
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    maxZoom: 19,
-                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                }).addTo(map);
+            // Clear previous route
+            if (control) {
+                map.removeControl(control);
             }
 
-            // Add markers for the start and end points
-            startMarker = L.marker(startCoords).addTo(map).bindPopup('Start Point').openPopup();
-            endMarker = L.marker(endCoords).addTo(map).bindPopup('End Point').openPopup();
+            // Use geocoder to get coordinates for the start location
+            const geocoder = L.Control.Geocoder.nominatim();
+            geocoder.geocode(start, function (results) {
+                if (results.length > 0) {
+                    const startLatLng = results[0].center;
 
-            // Get the route and display it
-            const routeCoordinates = await getRoute(startCoords, endCoords);
-            if (routeCoordinates) {
-                L.geoJSON({
-                    "type": "LineString",
-                    "coordinates": routeCoordinates
-                }, {
-                    style: {
-                        color: '#FF0000', // Change the color of the route
-                        weight: 5, // Change the thickness of the route
-                        opacity: 0.7 // Adjust the opacity
-                    }
-                }).addTo(map);
-                map.fitBounds([startCoords, endCoords]); // Adjust map view to fit both markers
-            }
+                    // Use geocoder to get coordinates for the end location
+                    geocoder.geocode(end, function (results) {
+                        if (results.length > 0) {
+                            const endLatLng = results[0].center;
+
+                            // Create a new routing control
+                            control = L.Routing.control({
+                                waypoints: [
+                                    L.latLng(startLatLng.lat, startLatLng.lng),
+                                    L.latLng(endLatLng.lat, endLatLng.lng)
+                                ],
+                                routeWhileDragging: true
+                            }).addTo(map);
+
+                            // Pan to the route
+                            map.fitBounds(control.getWaypoints().map(wp => wp.latLng));
+                        } else {
+                            alert("Could not find the end location.");
+                        }
+                    });
+                } else {
+                    alert("Could not find the start location.");
+                }
+            });
         }
-    }
 
-    // Debounced version of the updateMap function
-    const debouncedUpdateMap = debounce(updateMap, 300);
-
-    // Event listeners to trigger route update on input change
-    document.getElementById('from').addEventListener('input', debouncedUpdateMap);
-    document.getElementById('to').addEventListener('input', debouncedUpdateMap);
-
-    // Initialize the map with a default location if desired
-    updateMap();
-</script>
-
-    
-
+        // Event listener for button
+        document.getElementById('routeBtn').addEventListener('click', createRoute);
+    </script>
 </body>
 </html>

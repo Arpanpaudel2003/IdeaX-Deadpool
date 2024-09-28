@@ -92,3 +92,8 @@ def places(request):
 
 def guides(request):
     return render(request,'guides.html')
+
+def about(request):
+    return render(request,'about.html')
+
+
